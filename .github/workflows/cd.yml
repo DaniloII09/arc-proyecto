@@ -1,0 +1,45 @@
+name: Continuous Deployment
+
+on:
+  workflow_run:
+    workflows:
+      - Continuous Integration
+    branches:
+      - main
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Deploy to DigitalOcean
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: root
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/windbag-api:latest
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/windbag-web:latest
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/crypto-web:latest
+            docker stop windbag-api windbag-web crypto-web || true
+            docker rm windbag-api windbag-web crypto-web || true
+            docker run -d \
+              --name windbag-api \
+              --restart unless-stopped \
+              -e APP_VERSION=1.0.0 \
+              -e DEPLOYED_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+              -p 8080:80 \
+              ${{ secrets.DOCKERHUB_USERNAME }}/windbag-api:latest
+            docker run -d \
+              --name windbag-web \
+              --restart unless-stopped \
+              -p 8081:80 \
+              ${{ secrets.DOCKERHUB_USERNAME }}/windbag-web:latest
+            docker run -d \
+              --name crypto-web \
+              --restart unless-stopped \
+              -p 8082:80 \
+              ${{ secrets.DOCKERHUB_USERNAME }}/crypto-web:latest
