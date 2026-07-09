@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Windbag</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .card {
+      background: #1e293b;
+      padding: 3rem;
+      border-radius: 1rem;
+      text-align: center;
+      border: 1px solid #334155;
+      max-width: 480px;
+      width: 100%;
+    }
+    h1 { color: #38bdf8; font-size: 3rem; margin-bottom: 1rem; }
+    .badge {
+      display: inline-block;
+      background: #0ea5e9;
+      color: #0c4a6e;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    p { color: #94a3b8; margin-top: 0.5rem; font-size: 0.95rem; }
+    .divider {
+      border: none;
+      border-top: 1px solid #334155;
+      margin: 1.5rem 0;
+    }
+    .meta { font-size: 0.8rem; color: #475569; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Windbag</h1>
+    <span class="badge">Cloud · AWS EC2</span>
+    <p>Crypto Insurance & Investments</p>
+    <hr class="divider">
+    <p class="meta">Subnet 172.30.40.0/25 · on-premise</p>
+    <p class="meta">Containerized · served via Nginx</p>
+  </div>
+</body>
+</html>
