@@ -1,0 +1,24 @@
+services:
+  api:
+    build: ./api
+    container_name: windbag-api
+    restart: unless-stopped
+    environment:
+      - APP_VERSION=1.0.0
+      - DEPLOYED_AT=${DEPLOYED_AT:-unknown}
+    ports:
+      - "8080:80"
+
+  web-windbag:
+    build: ./web-windbag
+    container_name: windbag-web
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+
+  web-crypto:
+    build: ./web-crypto
+    container_name: crypto-web
+    restart: unless-stopped
+    ports:
+      - "8082:80"
