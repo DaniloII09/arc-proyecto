@@ -9,7 +9,7 @@ $DEPLOYED_AT = getenv('DEPLOYED_AT') ?: 'unknown';
 
 switch ($uri) {
     case '':
-    case '/':
+    case '/api':
         http_response_code(200);
         echo json_encode([
             'message' => 'Windbag REST API',
